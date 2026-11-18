@@ -1,0 +1,11 @@
+streamlit>=1.40,<2.0
+pandas>=2.2,<4.0
+numpy>=1.26,<3.0
+# Match the scikit-learn version embedded in the saved model and vectorizer.
+scikit-learn==1.9.1
+nltk>=3.8,<4.0
+matplotlib>=3.7,<4.0
+wordcloud>=1.9,<2.0
+joblib>=1.3,<2.0
+plotly>=5.15,<7.0
+textblob>=0.17.1,<1.0

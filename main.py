@@ -1,9 +1,12 @@
 import csv
 import re
 import random
+import os
 from textblob import TextBlob
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
+
+import config
 
 
 class SentimentAnalysis:
@@ -16,20 +19,30 @@ class SentimentAnalysis:
 
         searchTerm = input("Enter Keyword/Tag to search about: ")
         NoOfTerms = int(input("Enter how many tweets to search: "))
+        if NoOfTerms <= 0:
+            raise ValueError("The number of tweets must be positive.")
 
-        # load tweets dataset
-        with open('tweets.csv', encoding='latin-1') as file:
-            reader = list(csv.reader(file))
-            random.shuffle(reader)
-
-            for row in reader:
+        # Reservoir-sample matches without retaining the full dataset in memory.
+        matched = 0
+        with open(config.DATASET_PATH, encoding='latin-1', newline='') as file:
+            for row in csv.reader(file):
+                if len(row) <= 5:
+                    continue
                 tweet = row[5]
-                if searchTerm.lower() in tweet.lower():
+                if searchTerm.casefold() not in tweet.casefold():
+                    continue
+                matched += 1
+                if len(self.tweets) < NoOfTerms:
                     self.tweets.append(tweet)
-                if len(self.tweets) >= NoOfTerms:
-                    break
+                else:
+                    slot = random.randrange(matched)
+                    if slot < NoOfTerms:
+                        self.tweets[slot] = tweet
 
         print("Fetched", len(self.tweets), "tweets from dataset.\n")
+        if not self.tweets:
+            print("No matching tweets found.")
+            return
 
         polarity = 0
         positive = 0
@@ -40,7 +53,7 @@ class SentimentAnalysis:
         snegative = 0
         neutral = 0
 
-        csvFile = open('result.csv', 'a', newline='', encoding='utf-8')
+        csvFile = open(os.path.join(config.BASE_DIR, 'result.csv'), 'a', newline='', encoding='utf-8')
         csvWriter = csv.writer(csvFile)
 
         for tweet in self.tweets:

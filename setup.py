@@ -1,43 +1,27 @@
-from setuptools import setup, find_packages
-from codecs import open
-from os import path
+from pathlib import Path
 
-here = path.abspath(path.dirname(__file__))
+from setuptools import setup
 
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
 
 setup(
-    name='Twitter Sentiment Analysis',
-    version='1.3.0',
-
-    description='This script can tell you the sentiments of people regarding to any events happening in the world by analyzing tweets related to that event. It will search for tweets about any topic and analyze each tweet to see how positive or negative it's emotion is.',
-    long_description=long_description,
-
-
-    url='https://github.com/the-javapocalypse/Twitter-Sentiment-Analysis',
-
-
-    author='Muhammad Ali Zia',
-    author_email='muhammad.17ali@gmail.com',
-
-
-    classifiers=[
-
-        'Development Status :: 4 - Beta',
-
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+    name="twitter-sentiment-analysis",
+    version="2.0.0",
+    description="Streamlit dashboard and TF-IDF sentiment classifier for tweets.",
+    long_description=Path(__file__).with_name("README.md").read_text(encoding="utf-8"),
+    long_description_content_type="text/markdown",
+    py_modules=["app", "config", "evaluate", "main", "predict", "preprocessing", "train"],
+    python_requires=">=3.9",
+    install_requires=[
+        "streamlit>=1.28.0",
+        "pandas>=2.0.0",
+        "numpy>=1.24.0",
+        "scikit-learn>=1.3.0",
+        "nltk>=3.8.0",
+        "matplotlib>=3.7.0",
+        "seaborn>=0.12.0",
+        "wordcloud>=1.9.0",
+        "joblib>=1.3.0",
+        "plotly>=5.15.0",
+        "textblob>=0.17.1",
     ],
-
-
-    keywords='python twitter sentiment-analysis textblob nlp tweepy nltk',
-
-
-    install_requires=['tweepy','textblob','matplotlib'],
-
-   
 )

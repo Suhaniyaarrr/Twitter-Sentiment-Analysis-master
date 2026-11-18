@@ -1,0 +1,16 @@
+# Python bytecode and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local IDE and OS files
+.idea/
+.DS_Store
+Thumbs.db
+
+# Large local dataset: place tweets.csv in the project root for dataset tabs.
+tweets.csv
+
+# Generated legacy analysis output
+result.csv
